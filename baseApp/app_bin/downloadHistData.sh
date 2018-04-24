@@ -3,19 +3,19 @@
 app_date=$(date '+%d%b%C%y' -d "+5hours30minutes" | tr '[:lower:]' '[:upper:]')
 export app_date
 
-app_path="/home/clpg"
+app_path="/home/stckscrnr/baseApp"
 
 url='https://www.nseindia.com/content/historical/EQUITIES/2018/'
 
 cd $app_path/app_histData/
 
-for month in JAN FEB
+for month in JAN FEB MAR
 do 
 for i in $(cat ${app_path}/app_conf/${month}_working_days.list);
     do
-        if [ -e $month.csv ]
+        if [ -e $month.raw ]
 	then
-		echo "Data for $i available"
+		echo "Data for $month available"
 	else
 		mon=$(echo $i | cut -c3-5)
 		suffix="bhav.csv"
