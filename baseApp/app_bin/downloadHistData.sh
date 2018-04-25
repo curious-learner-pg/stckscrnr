@@ -21,19 +21,19 @@ get_data() {
         grep -w -f ${app_path}/app_conf/stocks.list $file >> ${app_path}/app_histData/$2$yr.raw
         rm $file $file.zip
 
-        echo $1 >> ${app_path}/app_conf/working_days.done
+        echo $1 >> ${app_path}/app_conf/trading_days.done
 }
 
 cd $app_path/app_histData/
 
-for month in JAN FEB MAR
+for month in JUN JUL MAY AUG SEP OCT NOV DEC
 do
-for i in $(cat ${app_path}/app_conf/${month}_working_days.list);
-yr=17
+yr="2018"
+for i in $(cat ${app_path}/app_conf/${month}${yr}_trading_days.list);
     do
         if [ -e ${app_path}/app_histData/$month$yr.raw ]
         then
-	    avail=$(grep -c $i ${app_path}/app_conf/working_days.done)
+	    avail=$(grep -c $i ${app_path}/app_conf/trading_days.done)
 	    if [ ${avail} -gt 0 ] 
             then
                 echo "Data for $i available"
@@ -48,5 +48,5 @@ done
 
 
 
-sort ${app_path}/app_conf/working_days.done | uniq > ${app_path}/app_conf/working_days.chkdone
-mv ${app_path}/app_conf/working_days.chkdone ${app_path}/app_conf/working_days.done
+sort ${app_path}/app_conf/trading_days.done | uniq > ${app_path}/app_conf/working_days.chkdone
+mv ${app_path}/app_conf/working_days.chkdone ${app_path}/app_conf/trading_days.done
