@@ -6,7 +6,8 @@ combine_data() {
 	for file in `ls ${basedir}/app_histData/*20*.raw`
 	do
 	    echo "Combining file : $file to allData.raw"
-	    cat ${file} >> ${basedir}/app_histData/allData.raw
+	    cat ${file} >> ${basedir}/app_histData/allData.traw
+	    sed -e 's/,$//g' < ${basedir}/app_histData/allData.traw > ${basedir}/app_histData/allData.raw
 	done
 }
 
@@ -15,7 +16,8 @@ filter_data() {
 	do 
 	    dbname=$(echo $file | cut -d"/" -f6)
 	    echo "Filtering : $dbname"
-	    grep -f $file ${basedir}/app_histData/allData.raw > ${basedir}/app_db/${dbname}.csv
+	    echo "SYMBOL,OPEN,HIGH,LOW,CLOSE,LAST,PREVCLOSE,TOTTRDQTY,TOTTRDVAL,TIMESTAMP,TOTALTRADES,ISIN"> ${basedir}/app_db/${dbname}.csv
+	    grep -f $file ${basedir}/app_histData/allData.raw >> ${basedir}/app_db/${dbname}.csv
 	done
 }
 
@@ -29,4 +31,4 @@ else
 	echo "Combining failed - Manual efforts required"
 fi
 
-rm ${basedir}/app_histData/allData.raw
+rm ${basedir}/app_histData/allData.*raw
