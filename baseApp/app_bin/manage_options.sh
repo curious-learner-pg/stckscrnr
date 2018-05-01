@@ -17,8 +17,11 @@ done
 	if [ $file == "OPT_NIFTY_CE_${3}.csv" ]
 	then 
 		grep -f ${bdir}/${3}/tmp.list ${bdir}/${3}/$file > ${bdir}/${3}/file.CE
-	else
+	elif [ $file == "OPT_NIFTY_PE_${3}.csv" ]
+	then
 		grep -f ${bdir}/${3}/tmp.list ${bdir}/${3}/$file > ${bdir}/${3}/file.PE
 	fi
 	done
+
+rm ${bdir}/$3/tmp.list
 	 
