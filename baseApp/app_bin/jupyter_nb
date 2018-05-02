@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+jupyter notebook --ip 0.0.0.0 --no-browser --allow-root >/home/py_jupyter/jupyter.log 2>&1 &
+
+sleep 2
+
+token=$(grep -i -m 1 '?token=' /home/py_jupyter/jupyter.log | cut -d"=" -f2)
+
+echo "Please use token/password : $token"
