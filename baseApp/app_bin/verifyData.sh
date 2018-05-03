@@ -10,7 +10,8 @@ prv_mon=$(date '+%b%C%y' -d "-1months +5hours30minutes" | tr '[:lower:]' '[:uppe
 #MON=()
 m=1
 
-while [ ${m} -lt 12 ]
+echo "** Records as of date : ${cyr_date}" >> ${basedir}/app_conf/monthly_data.avail
+while [ ${m} -le 12 ]
 do
 	mon=$(date '+%b%C%y' -d "-${m}months +5hours30minutes" | tr '[:lower:]' '[:upper:]')
 	

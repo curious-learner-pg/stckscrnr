@@ -9,6 +9,7 @@ url='https://www.nseindia.com/content/historical/EQUITIES/2018/'
 #url='https://www.nseindia.com/content/historical/EQUITIES/2017/'
 
 get_data() {
+
         mon=$(echo $1 | cut -c3-5)
 	yr=$(echo $1 | cut -c6-9)
         suffix="bhav.csv"
@@ -22,13 +23,18 @@ get_data() {
         rm $file $file.zip
 
         echo $1 >> ${app_path}/app_conf/trading_days.done
+	
 }
 
 cd $app_path/app_histData/
 
-for month in JUN JUL MAY AUG SEP OCT NOV DEC
-do
+## Used for batch processing of months ##
+
+#for month in JUN JUL MAY AUG SEP OCT NOV DEC
+#do
 yr="2018"
+month='APR'
+
 for i in $(cat ${app_path}/app_conf/${month}${yr}_trading_days.list);
     do
         if [ -e ${app_path}/app_histData/$month$yr.raw ]
@@ -44,8 +50,7 @@ for i in $(cat ${app_path}/app_conf/${month}${yr}_trading_days.list);
             get_data $i $month
         fi
     done
-done
-
+#done
 
 
 sort ${app_path}/app_conf/trading_days.done | uniq > ${app_path}/app_conf/working_days.chkdone

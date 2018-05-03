@@ -16,9 +16,18 @@ filter_data() {
 	do 
 	    dbname=$(echo $file | cut -d"/" -f6)
 	    echo "Filtering : $dbname"
-	    echo "SYMBOL,OPEN,HIGH,LOW,CLOSE,LAST,PREVCLOSE,TOTTRDQTY,TOTTRDVAL,TIMESTAMP,TOTALTRADES,ISIN"> ${basedir}/app_db/${dbname}.csv
-	    grep -f $file ${basedir}/app_histData/allData.raw >> ${basedir}/app_db/${dbname}.csv
+	    echo "SYMBOL,OPEN,HIGH,LOW,CLOSE,LAST,PREVCLOSE,TOTTRDQTY,TOTTRDVAL,TIMESTAMP,TOTALTRADES,ISIN"> ${basedir}/app_db/FnOSTOCKS_DATA/${dbname}.csv
+	    grep -f $file ${basedir}/app_histData/allData.raw >> ${basedir}/app_db/FnOSTOCKS_DATA/${dbname}.csv
 	done
+}
+
+verify_load() {
+	if [ $(($(wc -l ../app_conf/*_stocks.list | tail -1 | cut -f2 -d" ")*292+11)) -eq $((wc -l ../app_db/FnO_OPTIONS_DATA/*_stocks.list.csv | tail -1 | cut -f2 -d" "))  ]	
+	then 
+		echo "All records merged & available"
+	else 
+		echo "Some records missing please verify manually"
+	fi
 }
 
 combine_data
@@ -30,5 +39,7 @@ then
 else 
 	echo "Combining failed - Manual efforts required"
 fi
+
+verify_load
 
 rm ${basedir}/app_histData/allData.*raw
