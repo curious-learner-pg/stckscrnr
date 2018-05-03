@@ -3,6 +3,8 @@
 app_date=$(date '+%d%b%C%y' -d "+5hours30minutes" | tr '[:lower:]' '[:upper:]')
 export app_date
 
+echo "Today : $app_date"
+
 app_path="/home/stckscrnr/baseApp"
 
 url='https://www.nseindia.com/content/historical/EQUITIES/2018/'
@@ -33,10 +35,20 @@ cd $app_path/app_histData/
 #for month in JUN JUL MAY AUG SEP OCT NOV DEC
 #do
 yr="2018"
-month='APR'
+month='MAY'
 
 for i in $(cat ${app_path}/app_conf/${month}${yr}_trading_days.list);
     do
+	if [ $(echo ${i} | cut -c3-5) == $month ]
+	then 
+		echo "Month same"
+		if [ $(echo ${i} | cut -c1-2) -eq $(echo ${app_date} | cut -c1-2) ]
+		then 
+		echo "Date greater than current"
+		break
+		fi
+	fi
+
         if [ -e ${app_path}/app_histData/$month$yr.raw ]
         then
 	    avail=$(grep -c $i ${app_path}/app_conf/trading_days.done)

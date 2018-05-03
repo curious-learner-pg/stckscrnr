@@ -30,7 +30,8 @@ verify_load() {
 	fi
 }
 
-combine_data
+#required for batch process - multiple months#
+##combine_data
 
 if [ -e ${basedir}/app_histData/allData.raw ]
 then 
@@ -40,6 +41,6 @@ else
 	echo "Combining failed - Manual efforts required"
 fi
 
-verify_load
+#verify_load
 
 rm ${basedir}/app_histData/allData.*raw
